@@ -1,0 +1,22 @@
+dependencies {
+    implementation project(':model')
+    implementation 'org.springframework:spring-context'
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    implementation 'jakarta.persistence:jakarta.persistence-api' // TODO: Check if it's still necessary
+    implementation 'org.postgresql:r2dbc-postgresql'
+    implementation 'org.reactivecommons.utils:object-mapper-api:0.1.0'
+
+    // Flyway migrations (uses JDBC for migrations, R2DBC for app queries)
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.flywaydb:flyway-database-postgresql'
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // Security - BCrypt & JWT
+    implementation 'org.springframework.security:spring-security-crypto'
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+
+    testImplementation 'org.reactivecommons.utils:object-mapper:0.1.0'
+}
+

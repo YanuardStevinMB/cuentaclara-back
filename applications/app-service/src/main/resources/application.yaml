@@ -1,0 +1,38 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: "CuentaClara"
+  devtools:
+    add-properties: false
+  r2dbc:
+    url: r2dbc:postgresql://${adapters.r2dbc.host}:${adapters.r2dbc.port}/${adapters.r2dbc.database}
+    username: ${adapters.r2dbc.username}
+    password: ${adapters.r2dbc.password}
+  flyway:
+    enabled: true
+  profiles:
+    include: null
+adapters:
+  r2dbc:
+    host: localhost
+    port: 5433
+    database: local123
+    schema: public
+    username: postgres
+    password: 12345
+jwt:
+  secret: "CuentaClaraSuperSecretKeyForJWT2024MustBeAtLeast256Bits!"
+  access-token-expiration-ms: 900000
+  refresh-token-expiration-ms: 2592000000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,prometheus"
+  endpoint:
+    health:
+      probes:
+        enabled: true
+cors:
+  allowed-origins: "http://localhost:4200,http://localhost:8080"
