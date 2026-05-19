@@ -14,7 +14,8 @@ public enum ErrorCode {
     PASSWORD_RESET_TOKEN_EXPIRED("AUTH_006", "Password reset token has expired"),
     PASSWORD_RESET_TOKEN_USED("AUTH_007", "Password reset token has already been used"),
     USER_NOT_FOUND("AUTH_008", "User not found"),
-    WEAK_PASSWORD("AUTH_009", "Password does not meet minimum security requirements");
+    WEAK_PASSWORD("AUTH_009", "Password does not meet minimum security requirements"),
+    VALIDATION_ERROR("GEN_001", "Validation error");
 
     private final String code;
     private final String message;
