@@ -33,7 +33,7 @@ public class GlobalExceptionHandler {
             case INVALID_CREDENTIALS, USER_INACTIVE -> HttpStatus.UNAUTHORIZED;
             case TOKEN_EXPIRED, TOKEN_INVALID, PASSWORD_RESET_TOKEN_EXPIRED, PASSWORD_RESET_TOKEN_USED -> HttpStatus.UNAUTHORIZED;
             case USER_NOT_FOUND -> HttpStatus.NOT_FOUND;
-            case WEAK_PASSWORD -> HttpStatus.BAD_REQUEST;
+            case WEAK_PASSWORD, VALIDATION_ERROR -> HttpStatus.BAD_REQUEST;
         };
     }
 }
