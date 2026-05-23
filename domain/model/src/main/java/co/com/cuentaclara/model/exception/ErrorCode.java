@@ -15,7 +15,9 @@ public enum ErrorCode {
     PASSWORD_RESET_TOKEN_USED("AUTH_007", "Password reset token has already been used"),
     USER_NOT_FOUND("AUTH_008", "User not found"),
     WEAK_PASSWORD("AUTH_009", "Password does not meet minimum security requirements"),
-    VALIDATION_ERROR("GEN_001", "Validation error");
+    VALIDATION_ERROR("GEN_001", "Validation error"),
+    CONTACT_NOT_FOUND("CONTACT_001", "Contact not found"),
+    CONTACT_DUPLICATE("CONTACT_002", "A contact with that name and phone already exists");
 
     private final String code;
     private final String message;

@@ -11,6 +11,21 @@ import co.com.cuentaclara.model.user.gateways.UserPreferenceGateway;
 import co.com.cuentaclara.model.dashboard.gateways.DashboardGateway;
 import co.com.cuentaclara.model.movement.gateways.CategoryGateway;
 import co.com.cuentaclara.model.movement.gateways.MovementGateway;
+import co.com.cuentaclara.model.contact.gateways.ContactGateway;
+import co.com.cuentaclara.model.loan.gateways.LoanGateway;
+import co.com.cuentaclara.model.budget.gateways.BudgetGateway;
+import co.com.cuentaclara.usecase.contact.CreateContactUseCase;
+import co.com.cuentaclara.usecase.contact.GetContactsUseCase;
+import co.com.cuentaclara.usecase.contact.ToggleContactStatusUseCase;
+import co.com.cuentaclara.usecase.contact.UpdateContactUseCase;
+import co.com.cuentaclara.usecase.loan.CreateLoanUseCase;
+import co.com.cuentaclara.usecase.loan.GetLoansUseCase;
+import co.com.cuentaclara.usecase.loan.GetLoanSummaryUseCase;
+import co.com.cuentaclara.usecase.loan.ManagePaymentsUseCase;
+import co.com.cuentaclara.usecase.loan.UpdateLoanUseCase;
+import co.com.cuentaclara.usecase.budget.CreateBudgetUseCase;
+import co.com.cuentaclara.usecase.budget.GetBudgetsUseCase;
+import co.com.cuentaclara.usecase.budget.UpdateBudgetUseCase;
 import co.com.cuentaclara.usecase.auth.ForgotPasswordUseCase;
 import co.com.cuentaclara.usecase.auth.LoginUseCase;
 import co.com.cuentaclara.usecase.auth.LogoutUseCase;
@@ -170,5 +185,71 @@ public class UseCasesConfig {
     @Bean
     public ManageCategoryUseCase manageCategoryUseCase(CategoryGateway categoryGateway) {
         return new ManageCategoryUseCase(categoryGateway);
+    }
+
+    // ===== CONTACTS =====
+
+    @Bean
+    public CreateContactUseCase createContactUseCase(ContactGateway contactGateway) {
+        return new CreateContactUseCase(contactGateway);
+    }
+
+    @Bean
+    public UpdateContactUseCase updateContactUseCase(ContactGateway contactGateway) {
+        return new UpdateContactUseCase(contactGateway);
+    }
+
+    @Bean
+    public GetContactsUseCase getContactsUseCase(ContactGateway contactGateway) {
+        return new GetContactsUseCase(contactGateway);
+    }
+
+    @Bean
+    public ToggleContactStatusUseCase toggleContactStatusUseCase(ContactGateway contactGateway) {
+        return new ToggleContactStatusUseCase(contactGateway);
+    }
+
+    // ===== LOANS =====
+
+    @Bean
+    public CreateLoanUseCase createLoanUseCase(LoanGateway loanGateway) {
+        return new CreateLoanUseCase(loanGateway);
+    }
+
+    @Bean
+    public GetLoansUseCase getLoansUseCase(LoanGateway loanGateway) {
+        return new GetLoansUseCase(loanGateway);
+    }
+
+    @Bean
+    public UpdateLoanUseCase updateLoanUseCase(LoanGateway loanGateway) {
+        return new UpdateLoanUseCase(loanGateway);
+    }
+
+    @Bean
+    public ManagePaymentsUseCase managePaymentsUseCase(LoanGateway loanGateway) {
+        return new ManagePaymentsUseCase(loanGateway);
+    }
+
+    @Bean
+    public GetLoanSummaryUseCase getLoanSummaryUseCase(LoanGateway loanGateway) {
+        return new GetLoanSummaryUseCase(loanGateway);
+    }
+
+    // ===== BUDGETS =====
+
+    @Bean
+    public CreateBudgetUseCase createBudgetUseCase(BudgetGateway budgetGateway) {
+        return new CreateBudgetUseCase(budgetGateway);
+    }
+
+    @Bean
+    public GetBudgetsUseCase getBudgetsUseCase(BudgetGateway budgetGateway) {
+        return new GetBudgetsUseCase(budgetGateway);
+    }
+
+    @Bean
+    public UpdateBudgetUseCase updateBudgetUseCase(BudgetGateway budgetGateway) {
+        return new UpdateBudgetUseCase(budgetGateway);
     }
 }
