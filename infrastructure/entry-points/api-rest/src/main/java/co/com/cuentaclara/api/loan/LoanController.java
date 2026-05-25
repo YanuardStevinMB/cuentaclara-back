@@ -124,6 +124,18 @@ public class LoanController {
                 .then(Mono.just(ResponseEntity.ok().<Void>build()));
     }
 
+    @PatchMapping("/{id}/archive")
+    public Mono<ResponseEntity<Void>> archive(
+            @RequestHeader("Authorization") String authHeader,
+            @PathVariable UUID id) {
+        return extractUser(authHeader)
+                .flatMap(user -> {
+                    Loan loan = Loan.builder().id(id).userId(user.getId()).build();
+                    return updateLoanUseCase.archive(loan);
+                })
+                .then(Mono.just(ResponseEntity.ok().<Void>build()));
+    }
+
     @GetMapping("/summary")
     public Mono<ResponseEntity<LoanSummary>> summary(
             @RequestHeader("Authorization") String authHeader) {

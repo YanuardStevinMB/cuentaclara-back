@@ -16,11 +16,11 @@ spring:
 adapters:
   r2dbc:
     host: localhost
-    port: 5433
-    database: local123
+    port: 5432
+    database: cuentaclara
     schema: public
     username: postgres
-    password: 12345
+    password: 1234
 jwt:
   secret: "CuentaClaraSuperSecretKeyForJWT2024MustBeAtLeast256Bits!"
   access-token-expiration-ms: 900000
