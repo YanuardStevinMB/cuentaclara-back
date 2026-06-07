@@ -12,23 +12,31 @@ CREATE TABLE IF NOT EXISTS categories (
     created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX IF NOT EXISTS ix_categories_user ON categories (user_id, type, active);
+-- Only run if categories table has user_id column (skipped when V3 schema is present instead)
+DO $$
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM information_schema.columns
+        WHERE table_schema = 'public' AND table_name = 'categories' AND column_name = 'user_id'
+    ) THEN
+        CREATE INDEX IF NOT EXISTS ix_categories_user ON categories (user_id, type, active);
 
--- System default categories
-INSERT INTO categories (id, user_id, name, type, icon, color, is_system, active) VALUES
-    ('a0000000-0000-0000-0000-000000000001', NULL, 'Salario', 'INCOME', '💰', '#10b981', TRUE, TRUE),
-    ('a0000000-0000-0000-0000-000000000002', NULL, 'Freelance', 'INCOME', '💻', '#3b82f6', TRUE, TRUE),
-    ('a0000000-0000-0000-0000-000000000003', NULL, 'Inversiones', 'INCOME', '📈', '#8b5cf6', TRUE, TRUE),
-    ('a0000000-0000-0000-0000-000000000004', NULL, 'Otros ingresos', 'INCOME', '💵', '#6b7280', TRUE, TRUE),
-    ('a0000000-0000-0000-0000-000000000010', NULL, 'Vivienda', 'EXPENSE', '🏠', '#ef4444', TRUE, TRUE),
-    ('a0000000-0000-0000-0000-000000000011', NULL, 'Alimentos', 'EXPENSE', '🍔', '#f59e0b', TRUE, TRUE),
-    ('a0000000-0000-0000-0000-000000000012', NULL, 'Transporte', 'EXPENSE', '🚗', '#3b82f6', TRUE, TRUE),
-    ('a0000000-0000-0000-0000-000000000013', NULL, 'Servicios', 'EXPENSE', '⚡', '#8b5cf6', TRUE, TRUE),
-    ('a0000000-0000-0000-0000-000000000014', NULL, 'Entretenimiento', 'EXPENSE', '🎬', '#ec4899', TRUE, TRUE),
-    ('a0000000-0000-0000-0000-000000000015', NULL, 'Salud', 'EXPENSE', '🏥', '#14b8a6', TRUE, TRUE),
-    ('a0000000-0000-0000-0000-000000000016', NULL, 'Educación', 'EXPENSE', '📚', '#6366f1', TRUE, TRUE),
-    ('a0000000-0000-0000-0000-000000000017', NULL, 'Otros gastos', 'EXPENSE', '📦', '#6b7280', TRUE, TRUE)
-ON CONFLICT (id) DO NOTHING;
+        INSERT INTO categories (id, user_id, name, type, icon, color, is_system, active) VALUES
+            ('a0000000-0000-0000-0000-000000000001', NULL, 'Salario', 'INCOME', '💰', '#10b981', TRUE, TRUE),
+            ('a0000000-0000-0000-0000-000000000002', NULL, 'Freelance', 'INCOME', '💻', '#3b82f6', TRUE, TRUE),
+            ('a0000000-0000-0000-0000-000000000003', NULL, 'Inversiones', 'INCOME', '📈', '#8b5cf6', TRUE, TRUE),
+            ('a0000000-0000-0000-0000-000000000004', NULL, 'Otros ingresos', 'INCOME', '💵', '#6b7280', TRUE, TRUE),
+            ('a0000000-0000-0000-0000-000000000010', NULL, 'Vivienda', 'EXPENSE', '🏠', '#ef4444', TRUE, TRUE),
+            ('a0000000-0000-0000-0000-000000000011', NULL, 'Alimentos', 'EXPENSE', '🍔', '#f59e0b', TRUE, TRUE),
+            ('a0000000-0000-0000-0000-000000000012', NULL, 'Transporte', 'EXPENSE', '🚗', '#3b82f6', TRUE, TRUE),
+            ('a0000000-0000-0000-0000-000000000013', NULL, 'Servicios', 'EXPENSE', '⚡', '#8b5cf6', TRUE, TRUE),
+            ('a0000000-0000-0000-0000-000000000014', NULL, 'Entretenimiento', 'EXPENSE', '🎬', '#ec4899', TRUE, TRUE),
+            ('a0000000-0000-0000-0000-000000000015', NULL, 'Salud', 'EXPENSE', '🏥', '#14b8a6', TRUE, TRUE),
+            ('a0000000-0000-0000-0000-000000000016', NULL, 'Educación', 'EXPENSE', '📚', '#6366f1', TRUE, TRUE),
+            ('a0000000-0000-0000-0000-000000000017', NULL, 'Otros gastos', 'EXPENSE', '📦', '#6b7280', TRUE, TRUE)
+        ON CONFLICT (id) DO NOTHING;
+    END IF;
+END $$;
 
 CREATE TABLE IF NOT EXISTS movements (
     id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -44,8 +52,17 @@ CREATE TABLE IF NOT EXISTS movements (
     deleted_at    TIMESTAMPTZ
 );
 
-CREATE INDEX IF NOT EXISTS ix_movements_user_date ON movements (user_id, movement_date DESC) WHERE deleted_at IS NULL;
-CREATE INDEX IF NOT EXISTS ix_movements_user_type ON movements (user_id, type, movement_date) WHERE deleted_at IS NULL;
+-- Only run if movements table has user_id column (skipped when V3 schema is present instead)
+DO $$
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM information_schema.columns
+        WHERE table_schema = 'public' AND table_name = 'movements' AND column_name = 'user_id'
+    ) THEN
+        CREATE INDEX IF NOT EXISTS ix_movements_user_date ON movements (user_id, movement_date DESC) WHERE deleted_at IS NULL;
+        CREATE INDEX IF NOT EXISTS ix_movements_user_type ON movements (user_id, type, movement_date) WHERE deleted_at IS NULL;
+    END IF;
+END $$;
 
 CREATE TABLE IF NOT EXISTS scheduled_payments (
     id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
